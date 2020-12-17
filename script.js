@@ -107,8 +107,6 @@ function forecast(cityid){
         url:queryforcastURL,
         method:"GET"
     }).then(function(response){
-        console.log(response);
-        
         for (i=0;i<6;i++){
             var iconcode= response.list[i].weather[0].icon;
             var iconurl="https://openweathermap.org/img/wn/"+iconcode+".png";
