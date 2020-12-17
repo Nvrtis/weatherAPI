@@ -6,7 +6,7 @@ const presentCity = $("#present-city");
 const presentTemperature = $("#temperature");
 const humidty= $("#humidity");
 const windSpeed=$("#wind-speed");
-const uvIndex= $("#uv-index");
+const uvIndexList= $("#uv-index");
 const APIKey="afb6532892a9434a7de4da566251a643";
 const hList = $(".list-group")
 
@@ -57,7 +57,7 @@ function presentWeather(city){
         var winds=responsWindSpeed;
         $(windSpeed).html(" " + winds + "m/s");
 
-        UVIndex(response.coord.lon,response.coord.lat);
+        uvIndex(response.coord.lon,response.coord.lat);
         forecast(response.id);
         if(response.cod==200){
             cityArray=JSON.parse(localStorage.getItem("cityname"));
@@ -77,14 +77,27 @@ function presentWeather(city){
             });
 }
 // gets info from API
-function UVIndex(ln,lt){
+function uvIndex(ln,lt){
     var uvqURL="https://api.openweathermap.org/data/2.5/uvi?appid="+ APIKey+"&lat="+lt+"&lon="+ln;
     $.ajax({
             url:uvqURL,
             method:"GET"
             }).then(function(response){
-                $(uvIndex).html(" " +response.value);
-                $(uvIndex).css("background-color", "red")
+                if(response.value < 2){
+                    $(uvIndexList).html(" " +response.value);
+                    $(uvIndexList).css("background-color", "lightgreen")}
+                    else if(response.value < 5) {
+                        $(uvIndexList).html(" " +response.value);
+                        $(uvIndexList).css("background-color", "lightyellow")
+                    }
+                    else if(response.value < 7) {
+                        $(uvIndexList).html(" " +response.value);
+                        $(uvIndexList).css("background-color", "orange")
+                    }
+                    else {
+                        $(uvIndexList).html(" " +response.value);
+                        $(uvIndexList).css("background-color", "red")
+                    }
             });
 }
 // gets info from API 
@@ -148,9 +161,8 @@ function clearHistory(event){
     $(hList).empty()
 }
 
-
 loadlastCity()
 $("#search-button").on("click",displayWeather);
 $(document).on("click",getPastSearch);
 $("#clear-button").on("click",clearHistory);
-
+// uvColor()

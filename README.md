@@ -7,7 +7,7 @@
 ## Description
 
 In this assignment the goal was to see the weather outlook for multiple cities. I want to be presented after i have searched with present and future condition (5 days ahead) of that city. City name, date, icon representation of weather condition, humidity, the wind speed, and the UV index needs to be present.
-I will also have to present with color if the conditions for the city is favorable, moderate, or severe.
+I will also have to present with color if the conditions for the city is favorable, moderate, or severe with the UV indicator.
 
 The city i have searched for should also be stored in local storage, and make a append it with the search button, so that i can press it next time i join the site
 
@@ -33,7 +33,7 @@ function presentWeather ajax call to get temp, humidity, wind speed and UV index
 
 ![script](./02-Homework/Assets/script2.png)
 
-function UVIndex still needs some work with the color shifting with if statments. But otherwise takes the information from the previous Ajax call and call for a new one for the UV index info. After we have recieved the respons it will post it and set a color
+function UVIndex takes the information from the previous Ajax call and call for a new one for the UV index info. After we have recieved the respons it will post it and set a color.
 
 ![script](./02-Homework/Assets/script3.png)
 
