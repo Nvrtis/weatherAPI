@@ -19,7 +19,7 @@ var day = d.getDate();
 var date=  day + "." + month+ "." + year
 
 
-
+// looks for duplicates
 function find(cities){
     for (var i = 0; i<cityArray.length; i++){
         if(cities.toUpperCase()===cityArray[i]){
@@ -27,17 +27,17 @@ function find(cities){
         }}
     return 1;
 }
-
+// saves users search input
 function displayWeather(event){
     event.preventDefault();
     if(searchCity.val()!==""){
         city=searchCity.val();
-        currentWeather(city);
+        presenttWeather(city);
     }
 }
 
-
-function currentWeather(city){
+// gets info from API
+function presentWeather(city){
     var queryURL= "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + APIKey;
     $.ajax({
         url:queryURL,
@@ -76,6 +76,7 @@ function currentWeather(city){
                 }}}
             });
 }
+// gets info from API
 function UVIndex(ln,lt){
     var uvqURL="https://api.openweathermap.org/data/2.5/uvi?appid="+ APIKey+"&lat="+lt+"&lon="+ln;
     $.ajax({
@@ -86,7 +87,7 @@ function UVIndex(ln,lt){
                 $(uvIndex).css("background-color", "red")
             });
 }
-    
+// gets info from API 
 function forecast(cityid){
     var queryforcastURL="https://api.openweathermap.org/data/2.5/forecast?id="+cityid+"&appid="+APIKey;
     $.ajax({
@@ -110,22 +111,22 @@ function forecast(cityid){
         }
     });
 }
-
+// prepend the last search list
 function addToList(c){
     var listH= $("<li>"+c.toUpperCase()+"</li>");
     $(listH).attr("class","list-group-item");
     $(listH).attr("data-value",c.toUpperCase());
-    $(hList).append(listH);
+    $(hList).prepend(listH);
 }
-
-function invokePastSearch(event){
+// makes last search list useful
+function getPastSearch(event){
     var target=event.target;
     if (event.target.matches("li")){
         city=target.textContent.trim();
-        currentWeather(city);
+        presentWeather(city);
     }
 }
-
+// loads on startup
 function loadlastCity(){
     $("ul").empty();
     var cityArray = JSON.parse(localStorage.getItem("cityname"));
@@ -135,10 +136,10 @@ function loadlastCity(){
             addToList(cityArray[i]);
         }
         city=cityArray[i-1];
-        currentWeather(city);
+        presentWeather(city);
     }
 }
-
+// not working yet, should clear everything
 function clearHistory(event){
     event.preventDefault();
     city=""
@@ -148,8 +149,8 @@ function clearHistory(event){
 }
 
 
+loadlastCity()
 $("#search-button").on("click",displayWeather);
-$(document).on("click",invokePastSearch);
-$(window).on("load",loadlastCity);
+$(document).on("click",getPastSearch);
 $("#clear-history").on("click",clearHistory);
 

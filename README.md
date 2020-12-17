@@ -2,53 +2,43 @@
 
 
 ![Work Scheduler](Assets/main-page.png)
-[Link to scheduler](https://nvrtis.github.io/scheduler/)
+[Link to Website](https://nvrtis.github.io/weatherAPI/)
 
 ## Description
 
-In this assignment the goal was to make a workday schedular that stores the task you input into local storage, updates the clocl and changes with time.
+In this assignment the goal was to see the weather outlook for multiple cities. I want to be presented after i have searched with present and future condition (5 days ahead) of that city. City name, date, icon representation of weather condition, humidity, the wind speed, and the UV index needs to be present.
+I will also have to present with color if the conditions for the city is favorable, moderate, or severe.
+
+The city i have searched for should also be stored in local storage, and make a append it with the search button, so that i can press it next time i join the site
 
 ### Html
 
-We already recieved a bit of code on the HTML with a bootstrap addon. From that i added on the container section with rows that displays time, have input field and a button. 
-
-The most important part is the classes, id and the span wich has a value in it. These help me work with the javascript to make everything run  
+Html is using Bootstrap for simple grid layout. 
 
 ### CSS
 
-In the styling the most important thing that needs mentioning is the class present, past and future which changes with time
+Padding and margins are most important to make everything nice and presentable
 
 ### Javascript
 
-The Javascript start off with all the const which is used for shortening traveling the DOM in the script. It is saved as a const because it has no need to be changed during the script
 
-the var list is for variable that will change during the script, such as todays date, which needs to be available with loading the page
-
-![Time function](Assets/time.png)
-The time that displays in the HTML and moves every second is done by 2 functions.
-Showtime function gets a updated time, also and sets it in todaysDateDisplay in innerhtml before calling a updateTime function.
-
-The updateTime function is all about reseting the showTime function every second, so that the timer gets updated 
-We also call the showTime function so that it will be loaded with the page 
-
-
-Then we have an eventlistener that will be called into action when the users presses save.
-
-What will happen is that we save the users input into a variable. Then that variable will be stored in local storage with a key.
-
-![Local function](Assets/local.png)
-
-The next function is also something that we run with each page load, and that is displayText function.
-
-This function will recieve the item from local storage, save it as a variable and then display whatever task the users had inputted previously in the input field when the user comes back to the page.
-
-![Display function](Assets/display.png)
-
-The rest if the code is if statments that will change the classes on each different row. These classes changes the background color of the row and other styling, such that the users have an easy view over what is the past, present and future. 
-
-The statments goes through a loop to figure out with of the rows needs which class, and $(rowValue[i]).text() shows what value the time is on that row
-
-It is also updating every minute to see if it needs to be changed with 2 functions. The first functions is one for updating the other function which checks the if statments 
 
 ![If statments](Assets/if.png)
 
+function find is there to take any cities the user searches for or when clicking the last search button, it will make sure it will be no duplicates
+
+function displayWeather takes users input, stores the variable and sends it to presentWeather function
+
+function presentWeather ajax call to get temp, humidity, wind speed and UV index function and forevast funtion. Also has a if statment if the code = 200 then it means that the information is available and we can get the item. of city array is empty, we create an empty array before we pushes the city into it and call addToList function. Else if the city array is not empty we will just push into it before calling the same function
+
+function UVIndex still needs some work with the color shifting with if statments. But otherwise takes the information from the previous Ajax call and call for a new one for the UV index info. After we have recieved the respons it will post it and set a color
+
+function forecast is another Ajax call that uses the forecast api. I still need some work here, the days and month will not work around a new month. Still not sure how i will have to code that. But otherwise it takes the information from the forecast and post is 5 times in a loop with all the information.
+
+function addToList prepends everything from the cities that will be pushed into an array and posts it and adds a uppercase for it. May add a maximum to the list later on.
+
+function getPastSearch uses the users mouse and compares it to the list and calls the presentweather function.
+
+function loadlastCity loads the last city the users searched for in the beginning og the page
+
+function clearHistory needs some working on, so far it should delete the city array, empty the local storage and search list
