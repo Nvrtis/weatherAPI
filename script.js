@@ -32,7 +32,7 @@ function displayWeather(event){
     event.preventDefault();
     if(searchCity.val()!==""){
         city=searchCity.val();
-        presenttWeather(city);
+        presentWeather(city);
     }
 }
 
@@ -139,12 +139,12 @@ function loadlastCity(){
         presentWeather(city);
     }
 }
-// not working yet, should clear everything
+// clear search list and local storage
 function clearHistory(event){
     event.preventDefault();
     city=""
     cityArray=[];
-    localStorage.empty();
+    localStorage.clear();
     $(hList).empty()
 }
 
@@ -152,5 +152,5 @@ function clearHistory(event){
 loadlastCity()
 $("#search-button").on("click",displayWeather);
 $(document).on("click",getPastSearch);
-$("#clear-history").on("click",clearHistory);
+$("#clear-button").on("click",clearHistory);
 

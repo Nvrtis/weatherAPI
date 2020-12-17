@@ -47,4 +47,4 @@ function getPastSearch uses the users mouse and compares it to the list and call
 
 function loadlastCity loads the last city the users searched for in the beginning og the page
 
-function clearHistory needs some working on, so far it should delete the city array, empty the local storage and search list
+function clearHistory deletes the city array, empty the local storage and search list
