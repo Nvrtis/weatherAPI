@@ -18,7 +18,8 @@ var month = d.getMonth()+1;
 var day = d.getDate();
 var date=  day + "." + month+ "." + year
 
-// searches the city to see if it exists in the entries from the storage
+
+
 function find(cities){
     for (var i = 0; i<cityArray.length; i++){
         if(cities.toUpperCase()===cityArray[i]){
@@ -94,17 +95,14 @@ function forecast(cityid){
     }).then(function(response){
         console.log(response);
         
-        for (i=1;i<6;i++){
+        for (i=0;i<6;i++){
             var iconcode= response.list[i].weather[0].icon;
             var iconurl="https://openweathermap.org/img/wn/"+iconcode+".png";
             var tempK= response.list[i].main.temp;
             var tempC=(tempK-273.5);
             var humidity= response.list[i].main.humidity;
-
-            fDays=parseInt(day + i)
-
-
-        
+            var fDays=parseInt(day + i)
+       
             $("#fDate"+i).html(" " + fDays +"." + month);
             $("#fImg"+i).html("<img src="+iconurl+">");
             $("#fTemp"+i).html(tempC.toFixed(2));
@@ -119,7 +117,6 @@ function addToList(c){
     $(listH).attr("data-value",c.toUpperCase());
     $(hList).append(listH);
 }
-
 
 function invokePastSearch(event){
     var target=event.target;
@@ -140,16 +137,14 @@ function loadlastCity(){
         city=cityArray[i-1];
         currentWeather(city);
     }
-
 }
 
 function clearHistory(event){
     event.preventDefault();
-    cityArray=[];
-    localStorage.removeItem("cityname");
-    hList.empty()
     city=""
-
+    cityArray=[];
+    localStorage.empty();
+    $(hList).empty()
 }
 
 
@@ -158,8 +153,3 @@ $(document).on("click",invokePastSearch);
 $(window).on("load",loadlastCity);
 $("#clear-history").on("click",clearHistory);
 
-
-
-
-
-// if statment for UV, if black remove background color

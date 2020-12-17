@@ -1,4 +1,6 @@
-
+body {
+    font-family: 'Courier New', Courier, monospace;
+}
 
 
 .jumbotron {
@@ -6,8 +8,13 @@
 }
 
 h1 {
-    max-width: 365px;
+    max-width: 450px;
     margin: 0 auto;
+    font-weight: bolder;
+}
+
+h3, h4{
+    font-weight: bolder;
 }
 
 #search-city, #clear-button{
@@ -22,4 +29,35 @@ h1 {
     margin: 0;
     margin-top: 10px;
     height: 38px;
+}
+
+.container {
+    margin: 0;
+    padding: 0;
+}
+
+.col-sm-3 {
+    padding-left: 15px;
+    border: 1px solid;
+    border-radius: 5px;
+    margin-left: 20px;
+
+}
+
+
+.col-sm-2{
+border: 1px solid;
+background-color: lightblue;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding-right: 125px;
+    margin-left: 10px;
+
+}
+
+.col-sm-8 {
+    padding-left: 10px;
+    border: 1px solid;
+    border-radius: 5px;
+    margin-left: 10px;
 }
