@@ -9,8 +9,8 @@ const windSpeed=$("#wind-speed");
 const uvIndexList= $("#uv-index");
 const APIKey="afb6532892a9434a7de4da566251a643";
 const hList = $(".list-group")
-var cityArray=JSON.parse(localStorage.getItem("cityname")) || []
 
+var cityArray=JSON.parse(localStorage.getItem("cityname")) || []
 var city="";
 var d = new Date();
 var year = d.getFullYear()
@@ -35,8 +35,7 @@ function displayWeather(event){
     if(searchCity.val()!==""){
         city=searchCity.val();
         presentWeather();
-    }
-}
+    }}
 
 // gets info from API
 function presentWeather(){
@@ -103,7 +102,6 @@ function forecast(cityid){
             var tempC=(tempK-273.5);
             var humidity= response.list[i].main.humidity;
             var fDays=parseInt(day + i)
-       
             $("#fDate"+i).html(" " + fDays +"." + month);
             $("#fImg"+i).html("<img src="+iconurl+">");
             $("#fTemp"+i).html(tempC.toFixed(2));
@@ -137,7 +135,6 @@ function addToList () {
     var citylist = $('<li>' + cityArray[i]+"</li>")
     hList.prepend(citylist)
 }}
-
 
 addToList ()
 $("#search-button").on("click",displayWeather);

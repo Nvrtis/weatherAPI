@@ -25,7 +25,7 @@ Padding and margins are most important to make everything nice and presentable
 
 ![script](./02-Homework/script1.png)
 
-function find is there to take any cities the user searches for or when clicking the last search button, it will make sure it will be no duplicates
+function removeDuplicates compares what is in the city array and removes duplicates, after it is finished it will save the updated list in the local storage and empty the previous search list
 
 function displayWeather takes users input, stores the variable and sends it to presentWeather function
 
@@ -39,12 +39,10 @@ function UVIndex takes the information from the previous Ajax call and call for 
 
 function forecast is another Ajax call that uses the forecast api. I still need some work here, the days and month will not work around a new month. Still not sure how i will have to code that. But otherwise it takes the information from the forecast and post is 5 times in a loop with all the information.
 
-function addToList prepends everything from the cities that will be pushed into an array and posts it and adds a uppercase for it. May add a maximum to the list later on.
+function addToList post previous seach history in the html page
 
 ![script](./02-Homework/script4.png)
 
 function getPastSearch uses the users mouse and compares it to the list and calls the presentweather function.
-
-function loadlastCity loads the last city the users searched for in the beginning og the page
 
 function clearHistory deletes the city array, empty the local storage and search list
