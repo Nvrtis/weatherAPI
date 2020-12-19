@@ -9,9 +9,9 @@ const windSpeed=$("#wind-speed");
 const uvIndexList= $("#uv-index");
 const APIKey="afb6532892a9434a7de4da566251a643";
 const hList = $(".list-group")
+var cityArray=JSON.parse(localStorage.getItem("cityname")) || []
 
 var city="";
-var cityArray=[];
 var d = new Date();
 var year = d.getFullYear()
 var month = d.getMonth()+1;
@@ -19,25 +19,27 @@ var day = d.getDate();
 var date=  day + "." + month+ "." + year
 
 
-// looks for duplicates
-function find(cities){
-    for (var i = 0; i<cityArray.length; i++){
-        if(cities.toUpperCase()===cityArray[i]){
-            return -1;
-        }}
-    return 1;
+function removeDuplicates () {
+    cityArrayUnique = cityArray.filter(
+        function(a) {if (!this[a]) {this[a] = 1; return a;}},{}
+        
+        )
+        cityArray = cityArrayUnique
+        localStorage.setItem('cityname', JSON.stringify(cityArray))
+        hList.empty()
 }
+
 // saves users search input
 function displayWeather(event){
     event.preventDefault();
     if(searchCity.val()!==""){
         city=searchCity.val();
-        presentWeather(city);
+        presentWeather();
     }
 }
 
 // gets info from API
-function presentWeather(city){
+function presentWeather(){
     var queryURL= "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + APIKey;
     $.ajax({
         url:queryURL,
@@ -45,12 +47,9 @@ function presentWeather(city){
     }).then(function(response){
         var weathericon= response.weather[0].icon;
         var iconurl="https://openweathermap.org/img/wn/"+weathericon +"@2x.png";
-
         $(presentCity).html(response.name +"("+date+")" + "<img src="+iconurl+">");
         var tempC = (response.main.temp - 273.15);
-   
         $(presentTemperature).html(" " + tempC.toFixed(2) + " Celsius");
-        
         $(humidty).html(" " +response.main.humidity+"%");
        
         var responsWindSpeed=response.wind.speed;
@@ -59,22 +58,12 @@ function presentWeather(city){
 
         uvIndex(response.coord.lon,response.coord.lat);
         forecast(response.id);
-        if(response.cod==200){
-            cityArray=JSON.parse(localStorage.getItem("cityname"));
-            if (cityArray==null){
-                cityArray=[];
                 cityArray.push(city.toUpperCase()
                 );
                 localStorage.setItem("cityname",JSON.stringify(cityArray));
-                addToList(city);
-            }
-            else {
-                if(find(city)>0){
-                    cityArray.push(city.toUpperCase());
-                    localStorage.setItem("cityname",JSON.stringify(cityArray));
-                    addToList(city);
-                }}}
-            });
+                addToList();
+        }
+            );
 }
 // gets info from API
 function uvIndex(ln,lt){
@@ -122,13 +111,7 @@ function forecast(cityid){
         }
     });
 }
-// prepend the last search list
-function addToList(c){
-    var listH= $("<li>"+c.toUpperCase()+"</li>");
-    $(listH).attr("class","list-group-item");
-    $(listH).attr("data-value",c.toUpperCase());
-    $(hList).prepend(listH);
-}
+
 // makes last search list useful
 function getPastSearch(event){
     var target=event.target;
@@ -137,19 +120,7 @@ function getPastSearch(event){
         presentWeather(city);
     }
 }
-// loads on startup
-function loadlastCity(){
-    $("ul").empty();
-    var cityArray = JSON.parse(localStorage.getItem("cityname"));
-    if(cityArray!==null){
-        cityArray=JSON.parse(localStorage.getItem("cityname"));
-        for(i=0; i<cityArray.length;i++){
-            addToList(cityArray[i]);
-        }
-        city=cityArray[i-1];
-        presentWeather(city);
-    }
-}
+
 // clear search list and local storage
 function clearHistory(event){
     event.preventDefault();
@@ -159,8 +130,17 @@ function clearHistory(event){
     $(hList).empty()
 }
 
-loadlastCity()
+function addToList () {
+    removeDuplicates()
+    JSON.parse(localStorage.getItem("cityname"))
+    for(var i = 0; i<cityArray.length; i++) {
+    var citylist = $('<li>' + cityArray[i]+"</li>")
+    hList.prepend(citylist)
+}}
+
+
+addToList ()
 $("#search-button").on("click",displayWeather);
 $(document).on("click",getPastSearch);
 $("#clear-button").on("click",clearHistory);
-// uvColor()
+
